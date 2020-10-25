@@ -1,73 +1,45 @@
 (function(global) {
 
   function P5CanvasNode() {
-      this.addInput("clear", LiteGraph.ACTION);
-      this.addOutput("", "canvas");
-      this.properties = { width: 320, height: 240, autoclear: true };
+    this.addInput("clear", LiteGraph.ACTION);
+    this.addOutput("", "canvas");
+    this.properties = { width: 320, height: 240, autoclear: true };
 
-      this.canvas = document.createElement("canvas");
-      this.ctx = this.canvas.getContext("2d");
+    var skpreview = function( p ) {
+        var x = 100; 
+        var y = 100;
+        p.setup = function() {
+            p.createCanvas(this.properties.width, this.properties.height);
+        };
+
+        p.draw = function() {
+        };
+    };
+
+    this.canvas = document.getElementById("preview")
+    this.ctx = new p5(skpreview, this.canvas)
   }
 
-  CanvasNode.title = "P5Canvas";
-  CanvasNode.desc = "Canvas is where you draw your stuff";
+  P5CanvasNode.title = "P5Canvas";
+  P5CanvasNode.desc = "Canvas is where you draw your stuff";
 
-  CanvasNode.prototype.onExecute = function() {
-      var canvas = this.canvas;
-      var w = this.properties.width | 0;
-      var h = this.properties.height | 0;
-      if (canvas.width != w) {
-          canvas.width = w;
-      }
-      if (canvas.height != h) {
-          canvas.height = h;
-      }
-
+  P5CanvasNode.prototype.onExecute = function() {
       if (this.properties.autoclear) {
-          this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        this.ctx.background(0);
       }
       this.setOutputData(0, canvas);
   };
 
-  CanvasNode.prototype.onAction = function(action, param) {
+  P5CanvasNode.prototype.onAction = function(action, param) {
       if (action == "clear") {
-          this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.background(0);
       }
   };
 
-  LiteGraph.registerNodeType("graphics/canvas", CanvasNode);
+  LiteGraph.registerNodeType("p5js/canvas", P5CanvasNode);
 
-  function DrawImageNode() {
-      this.addInput("canvas", "canvas");
-      this.addInput("img", "image,canvas");
-      this.addInput("x", "number");
-      this.addInput("y", "number");
-      this.properties = { x: 0, y: 0, opacity: 1 };
-  }
 
-  DrawImageNode.title = "DrawImage";
-  DrawImageNode.desc = "Draws image into a canvas";
-
-  DrawImageNode.prototype.onExecute = function() {
-      var canvas = this.getInputData(0);
-      if (!canvas) {
-          return;
-      }
-
-      var img = this.getInputOrProperty("img");
-      if (!img) {
-          return;
-      }
-
-      var x = this.getInputOrProperty("x");
-      var y = this.getInputOrProperty("y");
-      var ctx = canvas.getContext("2d");
-      ctx.drawImage(img, x, y);
-  };
-
-  LiteGraph.registerNodeType("graphics/drawImage", DrawImageNode);
-
-  function DrawRectangleNode() {
+  function P5RectangleNode() {
       this.addInput("canvas", "canvas");
       this.addInput("x", "number");
       this.addInput("y", "number");
@@ -83,10 +55,10 @@
       };
   }
 
-  DrawRectangleNode.title = "DrawRectangle";
-  DrawRectangleNode.desc = "Draws rectangle in canvas";
+  P5RectangleNode.title = "P5Rectangle";
+  P5RectangleNode.desc = "Draws rectangle in P5 canvas";
 
-  DrawRectangleNode.prototype.onExecute = function() {
+  P5RectangleNode.prototype.onExecute = function() {
       var canvas = this.getInputData(0);
       if (!canvas) {
           return;
@@ -96,10 +68,13 @@
       var y = this.getInputOrProperty("y");
       var w = this.getInputOrProperty("w");
       var h = this.getInputOrProperty("h");
-      var ctx = canvas.getContext("2d");
-      ctx.fillRect(x, y, w, h);
+
+      ctx.stroke(0)
+      ctx.strokeWidth(4)
+      ctx.fill(255)
+      ctx.rect(x, y, w, h);
   };
 
-  LiteGraph.registerNodeType("graphics/drawRectangle", DrawRectangleNode);
+  P5RectangleNode.registerNodeType("p5js/rectangle", P5RectangleNode);
 
 })(this);

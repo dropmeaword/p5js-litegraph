@@ -39,7 +39,7 @@
 
       #display {
         position: absolute;
-        top 0px; left: 0px;
+        top: 0px; left: 0px;
         z-index: 9;
         background-color: #000;
         border: 1px solid #aaa;
@@ -78,6 +78,7 @@
 
     
     <script>
+      /*
       // preview p5js sketch
       var skpreview = function( p ) {
         var x = 100; 
@@ -94,50 +95,28 @@
       };
 
       var p5prev = new p5(skpreview, 'preview');
+      */
     </script>
-    
-    <!-- begin:  p5js wrappers -->
-    <script>
-      
-      function createCanvas(x, y) {
-      }
-
-      LiteGraph.wrapFunctionAsNode("p5js/canvas", wlayer, ["Number", "Number"])
-
-      function wlayer(z)
-      {
-      }
-
-      LiteGraph.wrapFunctionAsNode("p5js/layer", wlayer, ["Number"])
-
-      function wellipse(x, y, w, h)
-      {
-        window.p5prev.ellipse(x, y, w, h)
-      }
-
-      LiteGraph.wrapFunctionAsNode("p5js/ellipse", wellipse, ["Number","Number", "Number", "Number"], "Number")
-    </script>
-    <!-- end:  p5js wrappers -->
     
     <script>
     var graph = new LGraph();
     var canvas = new LGraphCanvas("#node_editor", graph);
     
-    var node_const = LiteGraph.createNode("basic/const");
-    node_const.pos = [40,200];
+    var cvs = LiteGraph.createNode("p5js/canvas")
+    cvs.pos = [40,200];
     graph.add(node_const);
-    node_const.setValue(4.5);
+
+    var nconst = LiteGraph.createNode("basic/const");
+    nconst.pos = [40,200];
+    graph.add(nconst);
+    nconst.setValue(4.5);
     
     var ellipse = LiteGraph.createNode("p5js/ellipse")
     ellipse.pos = [340,200]
     graph.add(ellipse)
 
-    var layer = LiteGraph.createNode("p5js/layer")
-    layer.pos = [600,200]
-    graph.add(layer)
-
-    node_const.connect(0, ellipse, 0 )
-    ellipse.connect(0, layer, 0 )
+    nconst.connect(0, ellipse, 0 )
+    ellipse.connect(0, cvs, 0 )
     
     graph.start()
     </script>

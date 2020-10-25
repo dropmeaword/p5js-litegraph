@@ -1,0 +1,73 @@
+{
+  "_from": "litegraph.js",
+  "_id": "litegraph.js@0.7.8",
+  "_inBundle": false,
+  "_integrity": "sha512-h8eqHLAvOIpFVcoDif1og6ClIygWyxVYwAWtur8XwHtUojUYGtB8X66ECqG1EGCkBTFSOS3Rc5KsmWKt3XowSw==",
+  "_location": "/litegraph.js",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "litegraph.js",
+    "name": "litegraph.js",
+    "escapedName": "litegraph.js",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/litegraph.js/-/litegraph.js-0.7.8.tgz",
+  "_shasum": "fc93b849a5749e1e46241fac1369fd884977453e",
+  "_spec": "litegraph.js",
+  "_where": "/Users/zilog/development/www/edu.derfunke.net/www/tmp",
+  "author": {
+    "name": "jagenjo"
+  },
+  "bugs": {
+    "url": "https://github.com/jagenjo/litegraph.js/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "A graph node editor similar to PD or UDK Blueprints, it works in a HTML5 Canvas and allow to exported graphs to be included in applications.",
+  "devDependencies": {
+    "express": "^4.17.1",
+    "google-closure-compiler": "^20171112.0.0",
+    "grunt": "^1.1.0",
+    "grunt-cli": "^1.2.0",
+    "grunt-closure-tools": "^1.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "nodemon": "^1.19.4",
+    "rimraf": "^2.7.1"
+  },
+  "directories": {
+    "doc": "doc"
+  },
+  "files": [
+    "build",
+    "css/litegraph.css",
+    "src/litegraph.d.ts"
+  ],
+  "homepage": "https://github.com/kriffe/litegraph.js#readme",
+  "license": "MIT",
+  "main": "build/litegraph.js",
+  "name": "litegraph.js",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jagenjo/litegraph.js.git"
+  },
+  "scripts": {
+    "build": "grunt build",
+    "lint": "npx eslint src",
+    "lint:fix": "npx eslint --fix src",
+    "prebuild": "rimraf build",
+    "prettier": "npx prettier --write src/**/*.* css/**/*.*",
+    "start": "nodemon utils/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "types": "src/litegraph.d.ts",
+  "version": "0.7.8"
+}

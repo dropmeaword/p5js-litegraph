@@ -13,9 +13,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/addons/p5.sound.min.js"></script>
 
     <script type="text/javascript" src="js/dragable.js"></script>
-    
+
     <script type="text/javascript" src="js/litegraph.js/build/litegraph.js"></script>
     <link rel="stylesheet" href="js/litegraph.js/css/litegraph.css">
+
+    <script type="text/javascript" src="js/p5graph.js"></script>
+
     <style>
       
       html, body, * {
@@ -39,7 +42,7 @@
 
       #display {
         position: absolute;
-        top: 0px; left: 0px;
+        top: 0px; left: 805px;
         z-index: 9;
         background-color: #000;
         border: 1px solid #aaa;
@@ -55,11 +58,11 @@
       }
     </style>
   </head>
-  <body style='width:100%; height:100%'>
+  <body style="width:100%; height:100%">
     
     <!-- begin: node editor section -->
     <section id="editor">
-      <canvas id='node_editor' width='800' height='500' style='border: 1px solid'></canvas>
+      <canvas id="node_editor" width="800" height="500" style="border: 1px solid"></canvas>
     </section>  
     <!-- end: node editor section -->
 
@@ -67,7 +70,7 @@
     <section class="display">
       <div id="display">
         <div id="displayhead">preview</div>
-        <canvas id='preview' width='320' height='240'></canvas>
+        <div id="preview" width="320" height="240"></canvas>
       </div>
     </section>  
     
@@ -78,47 +81,45 @@
 
     
     <script>
-      /*
-      // preview p5js sketch
-      var skpreview = function( p ) {
-        var x = 100; 
-        var y = 100;
-        p.setup = function() {
-          p.createCanvas(320, 240);
-        };
-
-        p.draw = function() {
-          p.background(0);
-          p.fill(255);
-          p.rect(x,y,50,50);
-        };
-      };
-
-      var p5prev = new p5(skpreview, 'preview');
-      */
-    </script>
-    
-    <script>
     var graph = new LGraph();
     var canvas = new LGraphCanvas("#node_editor", graph);
     
     var cvs = LiteGraph.createNode("p5js/canvas")
     cvs.pos = [40,200];
-    graph.add(node_const);
+    graph.add(cvs);
 
     var nconst = LiteGraph.createNode("basic/const");
-    nconst.pos = [40,200];
-    graph.add(nconst);
+    nconst.pos = [40,300];
     nconst.setValue(4.5);
+    graph.add(nconst);
     
-    var ellipse = LiteGraph.createNode("p5js/ellipse")
-    ellipse.pos = [340,200]
-    graph.add(ellipse)
+    var rect = LiteGraph.createNode("p5js/rectangle")
+    rect.pos = [340,200]
+    graph.add(rect)
 
-    nconst.connect(0, ellipse, 0 )
-    ellipse.connect(0, cvs, 0 )
+    nconst.connect(0, rect, 2 )
+    cvs.connect(0, rect, 0 )
     
     graph.start()
     </script>
+
+<!--     <script>
+      // preview p5js sketch
+      function setup() {
+        let cnvs = createCanvas(320, 240);
+        cnvs.parent('preview')
+      }
+
+      function draw() {
+        background(0)
+        let y = cos(frameCount / 5) * 20
+        ellipse(100, 100+y, 30, 30)
+      }
+
+      // var el = document.getElementById("preview")
+      // var p5prev = new p5(skpreview, 'preview');
+    </script>
+     -->
+
     </body>
   </html>
